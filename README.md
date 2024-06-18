@@ -103,10 +103,10 @@ Dr. Jane Smith, MD
 Internal Medicine
 """
 
-# Extract the assessment from the note
+### Extract the assessment from the note
 assessment = extract_assessment(llm, note)
 print("Extracted Assessment:", assessment)
 
-# Infer ICD codes from the extracted assessment
+### Infer ICD codes from the extracted assessment
 icd_codes = infer_icd_codes(assessment)
 print("Inferred ICD Codes:", icd_codes)
