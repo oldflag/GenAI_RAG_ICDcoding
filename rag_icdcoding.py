@@ -65,8 +65,10 @@ def extract_icd(llm, vdb):
     """
     message_icd = """
     You are a professional medical coder. \
-    From the provided note. \
-    Infer the related ICD codes from the content
+    From the provided note, \
+    Infer the related ICD codes related to the content based solely on the information given in the context \
+    If the information isn’t available in the context to formulate an answer, simply reply with ‘NO_ANSWER’. \
+    Please do not provide additional explanations or information.
 
     {content}
 
@@ -97,41 +99,44 @@ if __name__ == "__main__":
     chain_demo = extract_demo(llm, db)
     chain_icd = extract_icd(llm, db)
 
+    # Example 0
+    print(chain_icd.invoke("psoriasis"))
+
     # Example doctor's note for testing
-    note1 = """
-    Patient Name: John Doe1
-    Date of Birth: 01/15/1980
-    Visit Date: 06/11/2024
-    Provider: Dr. Jane Smith
+    # note1 = """
+    # Patient Name: John Doe1
+    # Date of Birth: 01/15/1980
+    # Visit Date: 06/11/2024
+    # Provider: Dr. Jane Smith
 
-    Chief Complaint:
-    Fever, abdominal pain, and diarrhea for five days.
+    # Chief Complaint:
+    # Fever, abdominal pain, and diarrhea for five days.
 
-    History of Present Illness:
-    John Doe, 44, reports high fever, severe abdominal cramps, and persistent diarrhea. Symptoms began five days ago and have worsened. Denies recent travel but consumed undercooked poultry a week ago.
+    # History of Present Illness:
+    # John Doe, 44, reports high fever, severe abdominal cramps, and persistent diarrhea. Symptoms began five days ago and have worsened. Denies recent travel but consumed undercooked poultry a week ago.
 
-    Physical Examination:
-        • Temperature: 102.2°F
-        • Abdomen: Tenderness in the right lower quadrant with guarding.
+    # Physical Examination:
+    #     • Temperature: 102.2°F
+    #     • Abdomen: Tenderness in the right lower quadrant with guarding.
 
-    Assessment and Plan:
-        1. typhoid fever.
-        • Order blood cultures and stool tests.
-        • Start empiric antibiotic therapy with ceftriaxone.
-        2. Salmonella enteritis.
-        • Maintain hydration with oral rehydration solutions.
-        • Educate on safe food handling and proper cooking techniques.
+    # Assessment and Plan:
+    #     1. typhoid fever.
+    #     • Order blood cultures and stool tests.
+    #     • Start empiric antibiotic therapy with ceftriaxone.
+    #     2. Salmonella enteritis.
+    #     • Maintain hydration with oral rehydration solutions.
+    #     • Educate on safe food handling and proper cooking techniques.
 
-    Follow-Up:
-    Return in 48 hours for follow-up and test results review. Immediate return if symptoms worsen.
+    # Follow-Up:
+    # Return in 48 hours for follow-up and test results review. Immediate return if symptoms worsen.
 
-    Signature:
-    Dr. Jane Smith, MD
-    """
-    # Extract the assessment from the note
-    assessment = extract_assessment(llm, note1)
-    print(chain_demo.invoke(note1))
-    print(chain_icd.invoke(assessment))
+    # Signature:
+    # Dr. Jane Smith, MD
+    # """
+    # # Extract the assessment from the note
+    # assessment = extract_assessment(llm, note1)
+    # print(chain_demo.invoke(note1))
+    # print(chain_icd.invoke(assessment))
 
     # Another example doctor's note for testing
     # note2 = """
@@ -172,3 +177,4 @@ if __name__ == "__main__":
     # assessment = extract_assessment(llm, note2)
     # print(chain_demo.invoke(note2))
     # print(chain_icd.invoke(assessment))
+    
