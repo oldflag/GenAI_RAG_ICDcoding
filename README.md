@@ -43,32 +43,24 @@ LangChain’s integration with vector stores and its support for retrieval-augme
 
 ## Functions
 
-load_dfdata(df)
+```python
+load_dfdata(df) #Loads data from a DataFrame and returns ICD descriptions.
 
-Loads data from a DataFrame and returns ICD descriptions.
+create_vectorstore(doc) #Creates a vector store from the provided documents using OpenAI embeddings.
 
-create_vectorstore(doc)
+extract_assessment(llm, anote) #Extracts the ‘Assessment’ section from a doctor’s note using a language model.
 
-Creates a vector store from the provided documents using OpenAI embeddings.
+extract_demo(llm, vdb) #Extracts demographic information (name and age) from a doctor’s note.
 
-extract_assessment(llm, anote)
-
-Extracts the ‘Assessment’ section from a doctor’s note using a language model.
-
-extract_demo(llm, vdb)
-
-Extracts demographic information (name and age) from a doctor’s note.
-
-extract_icd(llm, vdb)
-
-Infers the related ICD codes from the content of a doctor’s note.
+extract_icd(llm, vdb) #Infers the related ICD codes from the content of a doctor’s note.
+```
 
 ## Example Usage
 
 Example Doctor’s Note
 
 Here is a sample doctor’s note for testing:
-
+``` python
 note = """
 Patient Name: John Doe
 Date of Visit: June 17, 2024
@@ -110,3 +102,5 @@ print("Extracted Assessment:", assessment)
 ### Infer ICD codes from the extracted assessment
 icd_codes = infer_icd_codes(assessment)
 print("Inferred ICD Codes:", icd_codes)
+```
+
